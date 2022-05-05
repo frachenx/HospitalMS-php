@@ -1,0 +1,22 @@
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'].'/hospital2/classes/user.php');
+$resultString='';
+if(session_status()==PHP_SESSION_ACTIVE){
+}else{
+    session_start();
+}
+$user=User::GetUser($_SESSION['user_id']);
+
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $user=User::GetUser($_SESSION['user_id']);
+    $user->fullname=$_POST['name'];
+    $user->address=$_POST['address'];
+    $user->city=$_POST['city'];
+    $user->gender=$_POST['gender'];
+    if($user->UpdateUser()){
+        $resultString='1';
+    }else{
+        $resultString='0';
+    }
+    $user=User::GetUser($_SESSION['user_id']);
+}
